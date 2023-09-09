@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.initialize;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.action.intake;
 import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 
 /** This OpMode is a TeleOp.
@@ -14,7 +13,6 @@ import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 public class teleOp extends OpMode {
     // CONSTRUCT
     org.firstinspires.ftc.teamcode.action.mecanumDrive mecanumDrive = new mecanumDrive();
-    org.firstinspires.ftc.teamcode.action.intake intake = new intake();
     // DECLARE NULL
     // DECLARE CUSTOM
     // METHODS
@@ -22,7 +20,6 @@ public class teleOp extends OpMode {
     @Override
     public void init() {
         mecanumDrive.init(this);
-        intake.init(this);
     }
 
     /** Runs one time when the teleop starts. */
@@ -35,7 +32,6 @@ public class teleOp extends OpMode {
     public void loop() {
         mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
         mecanumDrive.slowMode(gamepad1.right_bumper);
-        intake.intake(gamepad1.right_trigger, gamepad1.right_bumper);
 
         mecanumDrive.telemetryOutput();
     }
