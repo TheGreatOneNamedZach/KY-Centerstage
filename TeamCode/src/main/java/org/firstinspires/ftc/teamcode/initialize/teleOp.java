@@ -42,7 +42,7 @@ public class teleOp extends OpMode {
     @Override
     public void loop() {
         mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-        mecanumDrive.slowMode(gamepad1.right_bumper);
+        mecanumDrive.slowMode(gamepad1.left_bumper);
         intake.intake(gamepad1.right_trigger, gamepad1.right_bumper);
         arm.setPower(-gamepad2.right_stick_y);
 

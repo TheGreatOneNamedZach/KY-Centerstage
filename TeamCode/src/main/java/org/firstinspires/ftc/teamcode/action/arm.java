@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -17,10 +18,9 @@ public class arm {
     TouchSensor touchSensor; // True when pressed
     Telemetry telemetry;
     // DECLARE CUSTOM
-    private static double totalSpeed = 0.75; // Speed multiplier for the slide
+    private static double totalSpeed = 1.00; // Speed multiplier for the slide
     private static final double maxAutoSpeed = 0.6; // Maximum speed the linear slide can operate at AUTOMATICALLY. "Auto" does not stand for "autonomous"
     private static final double hoverSpeed = 0.01; // Speed at which the slide can hover
-    private static double armPower = 0.00;
 
     // METHODS
     /** Initializes the arm.
@@ -31,6 +31,7 @@ public class arm {
         telemetry = opMode.telemetry;
         arm = hardwareMap.get(DcMotor.class, "Arm");
         touchSensor = hardwareMap.get(TouchSensor.class, "Touch Sensor");
+        arm.setDirection(DcMotorSimple.Direction.REVERSE);
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
@@ -40,7 +41,7 @@ public class arm {
      * @param power power to move the arm at. This is multiplied by the max speed.
      */
     public void setPower(double power) {
-        armPower = power * totalSpeed;
+        double armPower = power * totalSpeed;
 
         if (!(touchSensorPressed() && armPower < 0)) { // Everything BUT moving the arm down when fully retracted.
             if (armPower == 0 && !touchSensorPressed()) { // If the arm is not moving AND the limit switch is not pressed...

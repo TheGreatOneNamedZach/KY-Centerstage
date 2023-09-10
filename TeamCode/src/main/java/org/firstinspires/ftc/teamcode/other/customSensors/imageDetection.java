@@ -8,14 +8,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
-import org.firstinspires.ftc.vision.apriltag.AprilTagMetadata;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.apriltag.*;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-import java.util.Objects;
 
 /** This is an interface for this year's image detector. */
 public class imageDetection {
@@ -28,7 +24,6 @@ public class imageDetection {
     public VisionPortal visionPortal;
     private static String label;
     // DECLARE CUSTOM
-    private static final String DEFAULT_TFOD_MODEL_ASSET = "Centerstage.tflite"; // Default model
     private static float confidence = -1;
 
     // METHODS
@@ -40,7 +35,7 @@ public class imageDetection {
 
         // Create the TensorFlow processor by using a builder.
         tfod = new TfodProcessor.Builder()
-                .setModelAssetName(DEFAULT_TFOD_MODEL_ASSET)
+                //.setModelAssetName(DEFAULT_TFOD_MODEL_ASSET)
                 //.setModelLabels(LABELS)
                 .setIsModelTensorFlow2(true)
                 //.setIsModelQuantized(true)
@@ -88,12 +83,13 @@ public class imageDetection {
 
         // Set and enable the processor.
         builder.addProcessor(tfod);
+        builder.addProcessor(aprilTag);
 
         // Build the Vision Portal, using the above settings.
         visionPortal = builder.build();
 
         // Set confidence threshold for TFOD recognitions, at any time.
-        tfod.setMinResultConfidence(0.70f);
+        tfod.setMinResultConfidence(0.50f);
 
         // Disable or re-enable the TFOD processor at any time.
         //visionPortal.setProcessorEnabled(tfod, true);
@@ -120,13 +116,13 @@ public class imageDetection {
         return null;
     }
 
-    public AprilTagDetection aprilTagSearch(String tag) {
+    public AprilTagDetection aprilTagSearch(int id) {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
 
         // Step through the list of detections and display info for each one.
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
-                if (Objects.equals(tag, detection.metadata.name)) {
+                if (id == detection.metadata.id) {
                     return detection;
                 }
                 /*
