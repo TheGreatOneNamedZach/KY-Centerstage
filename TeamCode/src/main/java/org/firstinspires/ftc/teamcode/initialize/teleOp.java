@@ -4,7 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.action.arm;
+import org.firstinspires.ftc.teamcode.action.hook;
 import org.firstinspires.ftc.teamcode.action.intake;
+import org.firstinspires.ftc.teamcode.action.launcher;
 import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 import org.firstinspires.ftc.teamcode.other.customSensors.GamepadBonus;
 
@@ -18,7 +20,9 @@ public class teleOp extends OpMode {
     org.firstinspires.ftc.teamcode.action.mecanumDrive mecanumDrive = new mecanumDrive();
     org.firstinspires.ftc.teamcode.action.intake intake = new intake();
     org.firstinspires.ftc.teamcode.action.arm arm = new arm();
-    org.firstinspires.ftc.teamcode.other.customSensors.GamepadBonus gamepadBonus  = new GamepadBonus();
+    org.firstinspires.ftc.teamcode.other.customSensors.GamepadBonus gamepadBonus = new GamepadBonus();
+    org.firstinspires.ftc.teamcode.action.launcher launcher = new launcher();
+    org.firstinspires.ftc.teamcode.action.hook hook = new hook();
     // DECLARE NULL
     // DECLARE CUSTOM
     // METHODS
@@ -28,6 +32,7 @@ public class teleOp extends OpMode {
         mecanumDrive.init(this);
         intake.init(this);
         arm.init(this);
+        //launcher.init(this);
         gamepadBonus.init();
         gamepadBonus.resetLED(gamepad1);
         gamepadBonus.resetLED(gamepad2);
@@ -45,6 +50,8 @@ public class teleOp extends OpMode {
         mecanumDrive.slowMode(gamepad1.left_bumper);
         intake.intake(gamepad1.right_trigger, gamepad1.right_bumper);
         arm.setPower(-gamepad2.right_stick_y);
+        //launcher.launch(gamepad2.dpad_left);
+        hook.setPower(gamepad2.left_stick_x);
 
         mecanumDrive.telemetryOutput();
     }

@@ -10,7 +10,7 @@ public class servoPro extends OpMode {
     Servo servo;
     @Override
     public void init() {
-        servo = hardwareMap.get(Servo.class, "Swivel");
+        servo = hardwareMap.get(Servo.class, "Launcher");
     }
 
     @Override
