@@ -33,6 +33,7 @@ public class teleOp extends OpMode {
         intake.init(this);
         arm.init(this);
         //launcher.init(this);
+        hook.init(this);
         gamepadBonus.init();
         gamepadBonus.resetLED(gamepad1);
         gamepadBonus.resetLED(gamepad2);
